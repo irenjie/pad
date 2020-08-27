@@ -80,7 +80,7 @@ public class PadPersonController {
      * 人员编辑（修改或新建)
      *
      * @param padPerson
-     * @Validated 对 blog 进行验证
+     * @Validated 对 padPerson 进行验证
      */
     @PostMapping("/person/edit")
     public Result edit(@RequestBody PadPerson padPerson) {

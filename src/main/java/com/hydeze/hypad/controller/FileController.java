@@ -29,7 +29,7 @@ public class FileController {
         // 服务器文件路径.需要两个 // , \ 需转义，
         String filePath = "//home//hypad//uploadfile//" + map.get("id") + "//";
         // 本地开发
-        // String filePath = "D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + map.get("id") + "\\";
+        //String filePath = "D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + map.get("id") + "\\";
 
         File dest = new File(filePath + originalFilename);
         if (!dest.getParentFile().exists()) {
@@ -42,6 +42,7 @@ public class FileController {
             e.printStackTrace();
             return Result.fail(500, originalFilename + "上传失败", null);
         }
+        System.out.println("上传文件-"+originalFilename);
         return Result.success(originalFilename + "上传成功");
     }
 
@@ -49,11 +50,11 @@ public class FileController {
      * 用户文件的文件名列表
      */
     @GetMapping("/filename/{personid}")
-    public Result getFileNameById(@PathVariable(name = "personid") Long personid) {
+    public Result getFileNameById(@PathVariable(name = "personid") String personid) {
         // 服务器
         File file = new File("//home//hypad//uploadfile//" + personid + "//");
         // 本地
-        // File file = new File("D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + personid + "\\");
+        //File file = new File("D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + personid + "\\");
         if (!file.exists())
             return Result.success("还没有文件");
         String[] list = file.list();
@@ -96,7 +97,7 @@ public class FileController {
         String dest = filename.replaceFirst("-", "//");
         File file = new File("//home//hypad//uploadfile//" + dest);
         // 本地
-        /*String dest = filename.replaceFirst("-", "\\");
+        /*String dest = filename.replaceFirst("-", "\\\\");
         File file = new File("D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + dest);*/
         try {
             // 取得输出流

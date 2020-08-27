@@ -1,16 +1,16 @@
 package com.hydeze.hypad.service;
 
-import com.hydeze.hypad.entity.PadKey;
+import com.hydeze.hypad.entity.NowRank;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 服务类
+ *  服务类
  * </p>
  *
  * @author ma
- * @since 2020-08-11
+ * @since 2020-08-19
  */
-public interface IPadKeyService extends IService<PadKey> {
+public interface INowRankService extends IService<NowRank> {
 
 }

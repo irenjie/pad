@@ -41,7 +41,6 @@ public class PadKeyController {
     }
 
 
-
     /*
      * 关键字详情
      * @param id 根据 id 查询关键字
@@ -68,7 +67,7 @@ public class PadKeyController {
      */
     @GetMapping("/key/delete/{id}")
     public Result deleteKeys(@PathVariable(name = "id") Long id) {
-        return Result.fail("关键字不存在");
+        return Result.success("功能测试中,去使用批量删除");
     }
 
     /**
@@ -79,12 +78,9 @@ public class PadKeyController {
     @GetMapping("/keys/delete/{ids}")
     public Result deleteMultKeys(@PathVariable(name = "ids") String ids) {
         List<String> keyList = Arrays.asList(ids.split("-"));
-        for (int i = 0; i < keyList.size(); i++) {
-            iPadKeyService.removeById(Long.parseLong(keyList.get(i)));
-        }
+        iPadKeyService.removeByIds(keyList);
         return Result.success("删除关键字成功!");
     }
-
 
     /*
      * 关键字编辑

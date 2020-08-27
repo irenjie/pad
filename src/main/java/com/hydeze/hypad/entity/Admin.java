@@ -2,24 +2,22 @@ package com.hydeze.hypad.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import java.time.LocalDateTime;
 import java.io.Serializable;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author ma
- * @since 2020-08-11
+ * @since 2020-08-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Personkey implements Serializable {
+public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,14 +28,14 @@ public class Personkey implements Serializable {
     private Long id;
 
     /**
-     * 人员id
+     * 用户名
      */
-    private Long personid;
+    private String username;
 
     /**
-     * 关键词id
+     * 密码
      */
-    private Long keyid;
+    private String password;
 
     /**
      * 逻辑删除,1删除，0未删
@@ -47,12 +45,12 @@ public class Personkey implements Serializable {
     /**
      * create时间
      */
-    private LocalDateTime gmtCreate;
+    private LocalDateTime cstCreate;
 
     /**
      * modified时间
      */
-    private LocalDateTime gmtModified;
+    private LocalDateTime cstModified;
 
 
 }
