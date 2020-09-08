@@ -61,7 +61,6 @@ public class PadPersonController {
         Page page = new Page(currentPage, 20);
         IPage pageData = iPadPersonService.page(page, new QueryWrapper<PadPerson>().orderByDesc("gmt_create"));
 
-
         return Result.success(200, "成功加载人员", pageData);
     }
 

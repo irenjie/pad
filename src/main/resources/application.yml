@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    username:
+    username: root
     password:
-    url: jdbc:mysql://localhost:3306/hypad?serverTimezone=GMT%2B8&useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/hypad?serverTimezone=GMT%2B8&useUnicode=true&allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
   servlet:
     multipart:
       max-file-size: 200MB

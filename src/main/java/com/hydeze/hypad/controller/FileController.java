@@ -27,9 +27,9 @@ public class FileController {
         }
         String originalFilename = file.getOriginalFilename(); // 带扩展
         // 服务器文件路径.需要两个 // , \ 需转义，
-        String filePath = "//home//hypad//uploadfile//" + map.get("id") + "//";
+        // String filePath = "//home//hypad//uploadfile//" + map.get("id") + "//";
         // 本地开发
-        //String filePath = "D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + map.get("id") + "\\";
+         String filePath = "D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + map.get("id") + "\\";
 
         File dest = new File(filePath + originalFilename);
         if (!dest.getParentFile().exists()) {
@@ -52,11 +52,11 @@ public class FileController {
     @GetMapping("/filename/{personid}")
     public Result getFileNameById(@PathVariable(name = "personid") String personid) {
         // 服务器
-        File file = new File("//home//hypad//uploadfile//" + personid + "//");
+        // File file = new File("//home//hypad//uploadfile//" + personid + "//");
         // 本地
-        //File file = new File("D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + personid + "\\");
+         File file = new File("D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + personid + "\\");
         if (!file.exists())
-            return Result.success("还没有文件");
+            return Result.success("OK");
         String[] list = file.list();
         ArrayList<String> filenameList = new ArrayList<>();
         for (String s : list) {
@@ -72,11 +72,11 @@ public class FileController {
     @GetMapping("/deleteFile/{filename}")
     public Result deleteFile(@PathVariable(name = "filename") String filename) {
         // 服务器
-        String dest = filename.replaceFirst("-", "//");
-        File file = new File("//home//hypad//uploadfile//" + dest);
+        /*String dest = filename.replaceFirst("-", "//");
+        File file = new File("//home//hypad//uploadfile//" + dest);*/
         // 本地
-        /*String dest = filename.replaceFirst("-", "\\");
-        File file = new File("D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + dest);*/
+        String dest = filename.replaceFirst("-", "\\\\");
+        File file = new File("D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + dest);
         if (file.exists()) {
             file.delete();
             return Result.success("删除成功");
@@ -94,11 +94,11 @@ public class FileController {
         OutputStream os = null;
         InputStream is = null;
         // 服务器
-        String dest = filename.replaceFirst("-", "//");
-        File file = new File("//home//hypad//uploadfile//" + dest);
+        /*String dest = filename.replaceFirst("-", "//");
+        File file = new File("//home//hypad//uploadfile//" + dest);*/
         // 本地
-        /*String dest = filename.replaceFirst("-", "\\\\");
-        File file = new File("D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + dest);*/
+        String dest = filename.replaceFirst("-", "\\\\");
+        File file = new File("D:\\Program\\JavaProgram\\hypad\\uploadfile\\" + dest);
         try {
             // 取得输出流
             os = response.getOutputStream();

@@ -2,6 +2,7 @@ package com.hydeze.hypad.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -64,6 +65,7 @@ public class NowPersonController {
     @GetMapping("/nowperson/{id}")
     public Result detail(@PathVariable(name = "id") String id) {
         NowPerson nowPerson = nowPersonService.getById(id);
+        System.out.println(nowPerson.getCstResign());
         Assert.notNull(nowPerson, "人员不存在");
         return Result.success(200, "成功读取 " + nowPerson.getName() + " 的信息", nowPerson);
     }
@@ -76,17 +78,18 @@ public class NowPersonController {
     @PostMapping("/nowperson/edit")
     public Result edit(@RequestBody NowPerson nowPerson) {
         NowPerson temp = nowPersonService.getById(nowPerson.getId());
-        if (temp != null) {
-            System.out.println(temp);
-            BeanUtils.copyProperties(nowPerson, temp, "isDelete", "gmtCreate", "gmtModified");
-            nowPersonService.saveOrUpdate(temp);
-        } else {
-            nowPerson.setIsDelete(0);
+        if (temp == null) {
             nowPerson.setCstCreate(LocalDateTime.now());
-            nowPerson.setCstModified(LocalDateTime.now());
-            nowPersonService.save(nowPerson);
         }
+        nowPerson.setIsDelete(0);
+        nowPerson.setCstModified(LocalDateTime.now());
+        nowPersonService.saveOrUpdate(nowPerson);
 
+        if (nowPerson.getCstResign() == null) {
+            UpdateWrapper<NowPerson> wrapper = new UpdateWrapper<>();
+            wrapper.setSql("cst_resign=null where id='" + nowPerson.getId() + "'");
+            nowPersonService.update(nowPerson, wrapper);
+        }
         return Result.success(nowPerson.getName() + " 的信息录入成功");
     }
 
@@ -109,18 +112,18 @@ public class NowPersonController {
 
         // 查找所有带职级的人
         QueryWrapper<NowPerson> wrapper1 = new QueryWrapper<>();
-        wrapper.ne("ranknum",0);
+        wrapper.ne("ranknum", 0);
         List<NowPerson> nowPersonList = nowPersonService.list(wrapper1);
 
-         // 循环每个人，这人最近职级 in ranksId
+        // 循环每个人，这人最近职级 in ranksId
         List<NowPerson> result = new ArrayList<>();
         QueryWrapper<NowPersonRank> wrapper2 = new QueryWrapper<>();
         for (NowPerson nowPerson : nowPersonList) {
             wrapper2.clear();
-            wrapper2.eq("personid",nowPerson.getId());
-            wrapper2.eq("shunxu",nowPerson.getRanknum());
-            wrapper2.in("rankid",ranksId);
-            if (nowPersonRankService.getOne(wrapper2)!=null)
+            wrapper2.eq("personid", nowPerson.getId());
+            wrapper2.eq("shunxu", nowPerson.getRanknum());
+            wrapper2.in("rankid", ranksId);
+            if (nowPersonRankService.getOne(wrapper2) != null)
                 result.add(nowPersonService.getById(nowPerson.getId()));
         }
 
